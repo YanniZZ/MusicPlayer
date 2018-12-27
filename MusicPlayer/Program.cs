@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
@@ -18,9 +19,10 @@ namespace MusicPlayer
             int totalDuration = 0;
             player.Add(GetSongsData(ref totalDuration, out int minDuration, out int maxduration));
             Console.WriteLine($"Total: {totalDuration}, max: {maxduration}, min: {minDuration}");
-
-            //TraceInformation(player);
             
+            //TraceInformation(player);
+            player.AddArtist("Monowar");
+            player.AddAlbum("Abbey Road", 1969);
             player.Start();
             player.Play();
             player.VolumeUp();
@@ -109,6 +111,8 @@ namespace MusicPlayer
                 Duration = duration
             };
         }
+
+       
 
     }
 }

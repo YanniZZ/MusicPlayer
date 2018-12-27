@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace MusicPlayer
                 {
                     _volume = MIN_VOLUME;
                 }
-                else if(value >MAX_VOLUME)
+                else if (value > MAX_VOLUME)
                 {
                     _volume = MAX_VOLUME;
                 }
@@ -47,6 +48,7 @@ namespace MusicPlayer
             _locked = true;
             Console.WriteLine("Player has been locked");
         }
+
         public void Unlock()
         {
             _locked = false;
@@ -81,10 +83,11 @@ namespace MusicPlayer
         {
             if (_locked) return;
             _playing = true;
-            for (int i = 0; i < Songs.Length;i++) {
+            for (int i = 0; i < Songs.Length; i++)
+            {
                 Console.WriteLine($"Player is playing: {Songs[i].Name}", $"duration is {Songs[i].Duration}");
                 System.Threading.Thread.Sleep(1000);
-                }
+            }
         }
 
         public void Stop()
@@ -105,6 +108,22 @@ namespace MusicPlayer
         {
             Songs = songsArray;
         }
+
+        public  Artist AddArtist(string name = "Unknown Artist")
+        {
+            var artist = new Artist();
+            artist.Name = name;
+            return artist;
+        }
+
+        public Album AddAlbum(string name = "Unknown Album", int year = 0)
+        {
+            var album = new Album();
+            album.Name = name;
+            album.Year = year;
+            return album;
+        }
+
     }
 
 }
