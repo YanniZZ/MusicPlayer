@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
+using MusicPlayer.Extensions;
 
 namespace MusicPlayer
 {
@@ -54,7 +55,7 @@ namespace MusicPlayer
             _locked = false;
         }
 
-        public Song[] Songs { get; private set; }
+        public List<Song> Songs { get; private set; } = new List<Song>();
 
         public void VolumeUp()
         {
@@ -83,9 +84,13 @@ namespace MusicPlayer
         {
             if (_locked) return;
             _playing = true;
-            for (int i = 0; i < Songs.Length; i++)
+            foreach (var song in Songs)
             {
-                Console.WriteLine($"Player is playing: {Songs[i].Name}", $"duration is {Songs[i].Duration}");
+                //BL8 -Player 2/3. LikeDislike
+                if (song.Like == true) Console.ForegroundColor = ConsoleColor.Green; 
+                else if (song.Like == false) Console.ForegroundColor = ConsoleColor.Red; 
+                Console.WriteLine($"Player is playing: {song.Name}", $"duration is {song.Duration}");
+                Console.ResetColor();
                 System.Threading.Thread.Sleep(1000);
             }
         }
@@ -106,7 +111,7 @@ namespace MusicPlayer
 
         public void Add(params Song[] songsArray)
         {
-            Songs = songsArray;
+            Songs.AddRange(songsArray);
         }
 
         public  Artist AddArtist(string name = "Unknown Artist")
@@ -122,6 +127,15 @@ namespace MusicPlayer
             album.Name = name;
             album.Year = year;
             return album;
+        }
+        public void Shuffle()
+        {
+            this.Songs.Shuffle();
+        }
+
+        public void Sort()
+        {
+            Songs.Sort();
         }
 
     }

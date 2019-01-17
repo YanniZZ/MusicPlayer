@@ -76,7 +76,12 @@ namespace MusicPlayer
 
                 maxDuration = Math.Max(maxDuration, song.Duration);
             }
+            songs[0].LikeDislike(true);
+            songs[1].LikeDislike(false);
+            songs[3].LikeDislike(true);
+
             return songs;
+            
         }
 
         public static void TraceInformation(Player player)
@@ -84,7 +89,7 @@ namespace MusicPlayer
 
             Console.WriteLine(player.Songs[0].Artist.Name);
             Console.WriteLine(player.Songs[0].Duration);
-            Console.WriteLine(player.Songs.Length);
+            Console.WriteLine(player.Songs);
             Console.WriteLine(player.Volume);
         }
 
@@ -111,8 +116,5 @@ namespace MusicPlayer
                 Duration = duration
             };
         }
-
-       
-
     }
 }
