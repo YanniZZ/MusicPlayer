@@ -14,7 +14,7 @@ namespace MusicPlayer
         static void Main(string[] args)
         {
             
-            var player = new Player();
+            var player = new Player("Blue");
             //player.Volume = 50;
             int totalDuration = 0;
             player.Add(GetSongsData(ref totalDuration, out int minDuration, out int maxduration));

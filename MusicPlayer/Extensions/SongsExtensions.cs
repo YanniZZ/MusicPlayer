@@ -8,7 +8,7 @@ namespace MusicPlayer.Extensions
 {
     static class SongsExtensions
     {
-        static public List<Song> Shuffle(this List<Song> songs)
+        public static List<Song> Shuffle(this List<Song> songs)
         {
             Random rnd = new Random();
 
@@ -22,5 +22,10 @@ namespace MusicPlayer.Extensions
             return songs;
 
         }
+
+        //public static List<Song> Sort(this List<Song> songs)
+        //{
+
+        //} 
     }
 }

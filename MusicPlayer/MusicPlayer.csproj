@@ -45,7 +45,10 @@
   <ItemGroup>
     <Compile Include="Album.cs" />
     <Compile Include="Artist.cs" />
+    <Compile Include="ColorSkin.cs" />
+    <Compile Include="ClassicSkin.cs" />
     <Compile Include="Extensions\SongsExtensions.cs" />
+    <Compile Include="Skin.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

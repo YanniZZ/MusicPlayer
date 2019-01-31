@@ -19,6 +19,19 @@ namespace MusicPlayer
         private bool _playing;
         private int _volume;
 
+        public Skin skin = new ClassicSkin(); //- A.L2.Player1/1. Player Skin
+
+        //- A.L2.Player1/1. Player Skin
+        public Player()
+        {
+           var skin = new ClassicSkin();
+        }
+        //- A.L2.Player1/1. Player Skin
+        public Player(string color)
+        {
+            var skin = new ColorSkin(color);
+        }
+
         public int Volume
         {
             get { return _volume; }
@@ -47,7 +60,7 @@ namespace MusicPlayer
         public void Lock()
         {
             _locked = true;
-            Console.WriteLine("Player has been locked");
+            //Console.WriteLine("Player has been locked");
         }
 
         public void Unlock()
@@ -60,7 +73,8 @@ namespace MusicPlayer
         public void VolumeUp()
         {
             Volume++;
-            Console.WriteLine("Volume Down");
+            //Console.WriteLine("Volume Down");
+            skin.Render("Volume Down"); //- A.L2.Player1/1. Player Skin
         }
 
         public void VolumeDown()
@@ -68,7 +82,7 @@ namespace MusicPlayer
             if (_locked == false)
             {
                 Volume--;
-                Console.WriteLine("Volume Up");
+                //Console.WriteLine("Volume Up");
             }
         }
 
@@ -88,8 +102,9 @@ namespace MusicPlayer
             {
                 //BL8 -Player 2/3. LikeDislike
                 if (song.Like == true) Console.ForegroundColor = ConsoleColor.Green; 
-                else if (song.Like == false) Console.ForegroundColor = ConsoleColor.Red; 
-                Console.WriteLine($"Player is playing: {song.Name}", $"duration is {song.Duration}");
+                else if (song.Like == false) Console.ForegroundColor = ConsoleColor.Red;
+                //Console.WriteLine($"Player is playing: {song.Name}", $"duration is {song.Duration}");
+                
                 Console.ResetColor();
                 System.Threading.Thread.Sleep(1000);
             }
@@ -99,14 +114,17 @@ namespace MusicPlayer
         {
             if (_locked) return;
             _playing = false;
-            Console.WriteLine("Player is stopped");
+            //Console.WriteLine("Player is stopped");
+            skin.Render("Player is stopped");
         }
 
         public void Start()
         {
             if (_locked) return;
             _playing = true;
-            Console.WriteLine("Player has been started");
+            //Console.WriteLine("Player has been started");
+            skin.Render("Player has been started"); //- A.L2.Player1/1. Player Skin
+            skin.Clear();
         }
 
         public void Add(params Song[] songsArray)
