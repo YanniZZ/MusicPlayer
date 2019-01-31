@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
+using MusicPlayer.Extensions;
 
 namespace MusicPlayer
 {
@@ -17,6 +19,19 @@ namespace MusicPlayer
         private bool _playing;
         private int _volume;
 
+        public Skin skin = new ClassicSkin(); //- A.L2.Player1/1. Player Skin
+
+        //- A.L2.Player1/1. Player Skin
+        public Player()
+        {
+           var skin = new ClassicSkin();
+        }
+        //- A.L2.Player1/1. Player Skin
+        public Player(string color)
+        {
+            var skin = new ColorSkin(color);
+        }
+
         public int Volume
         {
             get { return _volume; }
@@ -26,7 +41,7 @@ namespace MusicPlayer
                 {
                     _volume = MIN_VOLUME;
                 }
-                else if(value >MAX_VOLUME)
+                else if (value > MAX_VOLUME)
                 {
                     _volume = MAX_VOLUME;
                 }
@@ -45,19 +60,21 @@ namespace MusicPlayer
         public void Lock()
         {
             _locked = true;
-            Console.WriteLine("Player has been locked");
+            //Console.WriteLine("Player has been locked");
         }
+
         public void Unlock()
         {
             _locked = false;
         }
 
-        public Song[] Songs { get; private set; }
+        public List<Song> Songs { get; private set; } = new List<Song>();
 
         public void VolumeUp()
         {
             Volume++;
-            Console.WriteLine("Volume Down");
+            //Console.WriteLine("Volume Down");
+            skin.Render("Volume Down"); //- A.L2.Player1/1. Player Skin
         }
 
         public void VolumeDown()
@@ -65,7 +82,7 @@ namespace MusicPlayer
             if (_locked == false)
             {
                 Volume--;
-                Console.WriteLine("Volume Up");
+                //Console.WriteLine("Volume Up");
             }
         }
 
@@ -81,30 +98,64 @@ namespace MusicPlayer
         {
             if (_locked) return;
             _playing = true;
-            for (int i = 0; i < Songs.Length;i++) {
-                Console.WriteLine($"Player is playing: {Songs[i].Name}", $"duration is {Songs[i].Duration}");
+            foreach (var song in Songs)
+            {
+                //BL8 -Player 2/3. LikeDislike
+                if (song.Like == true) Console.ForegroundColor = ConsoleColor.Green; 
+                else if (song.Like == false) Console.ForegroundColor = ConsoleColor.Red;
+                //Console.WriteLine($"Player is playing: {song.Name}", $"duration is {song.Duration}");
+                
+                Console.ResetColor();
                 System.Threading.Thread.Sleep(1000);
-                }
+            }
         }
 
         public void Stop()
         {
             if (_locked) return;
             _playing = false;
-            Console.WriteLine("Player is stopped");
+            //Console.WriteLine("Player is stopped");
+            skin.Render("Player is stopped");
         }
 
         public void Start()
         {
             if (_locked) return;
             _playing = true;
-            Console.WriteLine("Player has been started");
+            //Console.WriteLine("Player has been started");
+            skin.Render("Player has been started"); //- A.L2.Player1/1. Player Skin
+            skin.Clear();
         }
 
         public void Add(params Song[] songsArray)
         {
-            Songs = songsArray;
+            Songs.AddRange(songsArray);
         }
+
+        public  Artist AddArtist(string name = "Unknown Artist")
+        {
+            var artist = new Artist();
+            artist.Name = name;
+            return artist;
+        }
+
+        public Album AddAlbum(string name = "Unknown Album", int year = 0)
+        {
+            var album = new Album();
+            album.Name = name;
+            album.Year = year;
+            return album;
+        }
+        public void Shuffle()
+        {
+            this.Songs.Shuffle();
+        }
+
+        public void Sort()
+        {
+            Songs.Sort();
+        }
+
     }
 
 }

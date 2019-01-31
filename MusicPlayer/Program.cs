@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
@@ -13,14 +14,15 @@ namespace MusicPlayer
         static void Main(string[] args)
         {
             
-            var player = new Player();
+            var player = new Player("Blue");
             //player.Volume = 50;
             int totalDuration = 0;
             player.Add(GetSongsData(ref totalDuration, out int minDuration, out int maxduration));
             Console.WriteLine($"Total: {totalDuration}, max: {maxduration}, min: {minDuration}");
-
-            //TraceInformation(player);
             
+            //TraceInformation(player);
+            player.AddArtist("Monowar");
+            player.AddAlbum("Abbey Road", 1969);
             player.Start();
             player.Play();
             player.VolumeUp();
@@ -74,7 +76,12 @@ namespace MusicPlayer
 
                 maxDuration = Math.Max(maxDuration, song.Duration);
             }
+            songs[0].LikeDislike(true);
+            songs[1].LikeDislike(false);
+            songs[3].LikeDislike(true);
+
             return songs;
+            
         }
 
         public static void TraceInformation(Player player)
@@ -82,7 +89,7 @@ namespace MusicPlayer
 
             Console.WriteLine(player.Songs[0].Artist.Name);
             Console.WriteLine(player.Songs[0].Duration);
-            Console.WriteLine(player.Songs.Length);
+            Console.WriteLine(player.Songs);
             Console.WriteLine(player.Volume);
         }
 
@@ -109,6 +116,5 @@ namespace MusicPlayer
                 Duration = duration
             };
         }
-
     }
 }
